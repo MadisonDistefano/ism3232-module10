@@ -1,7 +1,10 @@
+# two_bots.py
+# Author: Madison DiStefano
+
 from chatbot import SupportChatbot
+from mock_model import MockModel
 from order_tool import OrderLookup
 from stock_tool import StockLookup
-
 
 ORDERS = {
     "A100": "shipped",
@@ -17,12 +20,14 @@ PRODUCTS = {
 
 order_tool = OrderLookup(ORDERS)
 stock_tool = StockLookup(PRODUCTS)
+model = MockModel()
 
 sunny = SupportChatbot(
     "Sunny",
     "You are a friendly support assistant.",
     order_tool,
     stock_tool,
+    model,
 )
 
 river = SupportChatbot(
@@ -30,10 +35,12 @@ river = SupportChatbot(
     "You are a helpful and patient support assistant.",
     order_tool,
     stock_tool,
+    model,
 )
 
 sunny.respond("hello")
 sunny.respond("What is the status of order A100?")
+
 river.respond("hello")
 
 print(f"{sunny.name} history length: {len(sunny.history)}")

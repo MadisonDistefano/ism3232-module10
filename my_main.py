@@ -1,5 +1,24 @@
+# my_main.py
+# Author: Madison DiStefano
+
 from my_assistant import BeautyAssistant
 from my_tool import AppointmentLookup
+from ollama_model import OllamaModel
+
+MODEL_NAME = "granite4.1:3b"
+
+INSTRUCTIONS = """
+You are Bella, a friendly and helpful beauty salon assistant.
+
+The salon is open Monday through Friday from 9 AM to 6 PM.
+Haircuts start at $35.
+The salon offers haircuts, hair coloring, and manicures.
+
+Only provide information included in these instructions.
+If you do not know an answer, say you do not know and offer to connect
+the customer with a salon team member.
+Keep your answers short and friendly.
+"""
 
 APPOINTMENTS = {
     "Emma": "November 5 at 10:00 AM for a haircut",
@@ -8,11 +27,13 @@ APPOINTMENTS = {
 }
 
 appointment_tool = AppointmentLookup(APPOINTMENTS)
+model = OllamaModel(MODEL_NAME)
 
 bella = BeautyAssistant(
     "Bella",
-    "You are a friendly and helpful beauty salon assistant.",
+    INSTRUCTIONS,
     appointment_tool,
+    model,
 )
 
 print("Bella Beauty Salon Assistant")
